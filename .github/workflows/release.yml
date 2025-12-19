@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create distribution directory
+        run: mkdir -p dist
+
+      - name: Package Chrome extension
+        run: |
+          cd chrome-extension
+          zip -r ../dist/makerworld-collection-shortcut-chrome-${{ github.ref_name }}.zip . -x "*.git*"
+          cd ..
+
+      - name: Package Firefox extension
+        run: |
+          cd firefox-extension
+          zip -r ../dist/makerworld-collection-shortcut-firefox-${{ github.ref_name }}.zip . -x "*.git*"
+          cd ..
+
+      - name: Copy userscript
+        run: |
+          cp userscript/makerworld-quickfav.user.js dist/makerworld-collection-shortcut-${{ github.ref_name }}.user.js
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum * > checksums.txt
+          cd ..
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/makerworld-collection-shortcut-chrome-${{ github.ref_name }}.zip
+            dist/makerworld-collection-shortcut-firefox-${{ github.ref_name }}.zip
+            dist/makerworld-collection-shortcut-${{ github.ref_name }}.user.js
+            dist/checksums.txt
+          body: |
+            ## MakerWorld Collection Shortcut ${{ github.ref_name }}
+            
+            Add a collection shortcut button in the MakerWorld navigation bar.
+            
+            在 MakerWorld 导航栏添加收藏夹快捷按钮。
+            
+            ---
+            
+            ### 📦 Downloads | 下载
+            
+            - **Chrome/Edge**: `makerworld-collection-shortcut-chrome-${{ github.ref_name }}.zip`
+            - **Firefox**: `makerworld-collection-shortcut-firefox-${{ github.ref_name }}.zip`
+            - **Tampermonkey**: `makerworld-collection-shortcut-${{ github.ref_name }}.user.js`
+            
+            ### 📖 Installation | 安装方法
+            
+            Please refer to [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)
+            
+            请参考 [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)
+            
+            ### 🌐 Supported Languages | 支持的语言
+            
+            English, 中文, Deutsch, Français, Italiano, Español, 日本語, 한국어, Svenska, Português
+            
+            ### ✨ Features | 功能特点
+            
+            - Quick access to collections | 快速访问收藏夹
+            - Seamlessly integrated design | 完美融入原生设计
+            - Multi-language support | 多语言支持
+            - Lightweight and fast | 轻量快速
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

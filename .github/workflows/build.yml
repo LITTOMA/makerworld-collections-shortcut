@@ -1,0 +1,61 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build check
+        run: npm run build
+
+      - name: Verify Chrome extension
+        run: |
+          echo "Checking Chrome extension files..."
+          test -f chrome-extension/manifest.json
+          test -f chrome-extension/content.js
+          test -f chrome-extension/styles.css
+          echo "✅ Chrome extension files verified"
+
+      - name: Verify Firefox extension
+        run: |
+          echo "Checking Firefox extension files..."
+          test -f firefox-extension/manifest.json
+          test -f firefox-extension/content.js
+          test -f firefox-extension/styles.css
+          echo "✅ Firefox extension files verified"
+
+      - name: Verify userscript
+        run: |
+          echo "Checking userscript..."
+          test -f userscript/makerworld-quickfav.user.js
+          echo "✅ Userscript verified"
+
+      - name: Test package creation
+        run: |
+          mkdir -p test-dist
+          cd chrome-extension && zip -r ../test-dist/chrome.zip . -x "*.git*" && cd ..
+          cd firefox-extension && zip -r ../test-dist/firefox.zip . -x "*.git*" && cd ..
+          cp userscript/makerworld-quickfav.user.js test-dist/
+          echo "✅ Package creation test passed"
+
