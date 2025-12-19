@@ -1,0 +1,31 @@
+/**
+ * MakerWorld QuickFav - Additional Styles (Firefox)
+ * 额外的样式调整（如果需要）
+ */
+
+/* 确保按钮容器正确显示 */
+#quickfav-button-container {
+  display: flex;
+  align-items: center;
+}
+
+/* 按钮悬停效果增强 */
+#quickfav-button {
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#quickfav-button:hover {
+  transform: translateY(-1px);
+}
+
+#quickfav-button:active {
+  transform: translateY(0);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  #quickfav-button-container {
+    display: none; /* 在小屏幕上隐藏，避免导航栏拥挤 */
+  }
+}
+

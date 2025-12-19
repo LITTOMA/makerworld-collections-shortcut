@@ -1,0 +1,26 @@
+{
+  "name": "makerworld-collection-shortcut",
+  "version": "1.0.0",
+  "description": "Add a collection shortcut button in the MakerWorld navigation bar",
+  "scripts": {
+    "dev": "node scripts/watch.js",
+    "build": "node scripts/build.js",
+    "build:chrome": "node scripts/build-chrome.js",
+    "build:firefox": "node scripts/build-firefox.js",
+    "package": "node scripts/package.js"
+  },
+  "keywords": [
+    "makerworld",
+    "browser-extension",
+    "userscript",
+    "favorites",
+    "3d-printing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "archiver": "^6.0.1",
+    "chokidar": "^3.5.3"
+  }
+}
+
