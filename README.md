@@ -6,7 +6,11 @@
 
 ## English
 
-Add a collection shortcut button in the MakerWorld navigation bar.
+### Why This Exists?
+
+Ever struggled to find the collections entry on MakerWorld? Ever frustrated by the hover menu that disappears the moment you move your mouse away? **Me too!** That's why this project was born!
+
+This extension adds a **permanent, always-visible** collection shortcut button right in the navigation bar - no more hunting, no more disappearing menus!
 
 ### Features
 
@@ -43,7 +47,11 @@ MIT License
 
 ## 中文
 
-在 MakerWorld 导航栏添加收藏夹快捷按钮。
+### 为什么会有这个项目？
+
+你是否为找不到 MakerWorld 的收藏夹入口而困扰？你是否为好不容易找到了收藏夹入口，但悬停菜单极其容易消失而抓狂？**我也是！** 因此这个项目就诞生了！
+
+这个插件在导航栏添加了一个**永久可见**的收藏夹快捷按钮 - 不再需要到处找，不再有消失的菜单！
 
 ### 功能特点
 
